@@ -1,6 +1,6 @@
 {
     "name": "hexlet/code",
-    "type": "project",
+    "type": "library",
     "autoload": {
         "psr-4": {
             "Hexlet\\Validator\\": "src/"
