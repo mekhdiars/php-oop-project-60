@@ -1,0 +1,29 @@
+{
+    "name": "hexlet/code",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Validator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Hexlet\\Validator\\Tests\\": "tests"
+      }
+    },
+    "authors": [
+        {
+            "name": "Mekhdi",
+            "email": "mehdiarsahanov@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/collections": "^11.13",
+        "symfony/string": "^7.1"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^7.1",
+        "phpunit/phpunit": "^11.3",
+        "squizlabs/php_codesniffer": "^3.10"
+    }
+}
