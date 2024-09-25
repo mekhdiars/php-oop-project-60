@@ -19,23 +19,26 @@ class NumberValidator
 
     public function isValid($num)
     {
+        $require = true;
         $positive = true;
 
-        if (!$this->require) {
-            return true;
+        if ($this->require) {
+            $require = $num !== null;
         }
         if ($this->positive) {
-            $positive = $num > 0;
+            $positive = $num >= 0;
         }
 
         return $positive
-            && $num >= $this->min
-            && $num <= $this->max;
+            && $require
+            && (int) $num >= $this->min
+            && (int) $num <= $this->max;
     }
     
     public function required()
     {
         $this->require = true;
+        return $this;
     }
 
     public function positive()

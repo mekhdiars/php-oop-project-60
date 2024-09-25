@@ -29,6 +29,7 @@ class StringValidator
     public function required()
     {
         $this->require = true;
+        return $this;
     }
 
     public function contains($word)
