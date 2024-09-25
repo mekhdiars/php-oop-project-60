@@ -17,13 +17,11 @@ class StringValidator
 
     public function isValid($text)
     {
-        $require = true;
-        if ($this->require) {
-            $require = $text != null
-                && $text != '';
+        if (!$this->require) {
+            return true;
         }
 
-        return $require
+        return !empty($text)
             && str_contains($text, $this->substr)
             && strlen($text) >= $this->minLength;
     }
