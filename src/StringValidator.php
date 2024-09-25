@@ -19,8 +19,8 @@ class StringValidator
     {
         $require = true;
         if ($this->require) {
-            $require = $text !== null
-                && $text !== '';
+            $require = $text != null
+                && $text != '';
         }
 
         return $require
