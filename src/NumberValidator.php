@@ -2,54 +2,42 @@
 
 namespace Hexlet\Validator;
 
-class NumberValidator
+class NumberValidator extends ParentValidator
 {
-    private $require;
-    private $positive;
-    private $min;
-    private $max;
+    private bool $shouldBePositive = false;
+    private $min = -INF;
+    private $max = INF;
 
-    public function __construct()
+    public function isValid(?int $num): bool
     {
-        $this->require = false;
-        $this->positive = false;
-        $this->min = -INF;
-        $this->max = INF;
-    }
-
-    public function isValid($num)
-    {
-        $require = true;
-        $positive = true;
-
-        if ($this->require) {
-            $require = $num !== null;
-        }
-        if ($this->positive) {
-            $positive = $num >= 0;
+        if (!$this->requirement) {
+            return true;
         }
 
-        return $positive
-            && $require
+        return is_integer($num)
+            && $this->checkPositive($num)
             && (int) $num >= $this->min
             && (int) $num <= $this->max;
     }
-    
-    public function required()
+
+    public function positive(): self
     {
-        $this->require = true;
+        $this->shouldBePositive = true;
         return $this;
     }
 
-    public function positive()
-    {
-        $this->positive = true;
-        return $this;
-    }
-
-    public function range($min, $max)
+    public function range($min, $max): void
     {
         $this->min = $min;
         $this->max = $max;
+    }
+
+    public function checkPositive(?int $num): bool
+    {
+        if ($this->shouldBePositive) {
+            return $num > 0 || is_null($num);
+        }
+
+        return true;
     }
 }
