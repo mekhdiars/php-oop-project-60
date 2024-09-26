@@ -2,22 +2,14 @@
 
 namespace Hexlet\Validator;
 
-class StringValidator
+class StringValidator extends ParentValidator
 {
-    private $require;
-    private $substr;
-    private $minLength;
+    private string $substr = '';
+    private int $minLength = 0;
 
-    public function __construct()
+    public function isValid(?string $text): bool
     {
-        $this->require = false;
-        $this->substr = '';
-        $this->minLength = 0;
-    }
-
-    public function isValid($text)
-    {
-        if (!$this->require) {
+        if (!$this->requirement) {
             return true;
         }
 
@@ -26,19 +18,13 @@ class StringValidator
             && strlen($text) >= $this->minLength;
     }
 
-    public function required()
-    {
-        $this->require = true;
-        return $this;
-    }
-
-    public function contains($word)
+    public function contains(string $word): self
     {
         $this->substr = $word;
         return $this;
     }
 
-    public function minLength($length)
+    public function minLength(int $length): self
     {
         $this->minLength = $length;
         return $this;
