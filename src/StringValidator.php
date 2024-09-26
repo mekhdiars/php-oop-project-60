@@ -9,13 +9,9 @@ class StringValidator extends ParentValidator
 
     public function isValid(?string $text): bool
     {
-        if (!$this->requirement) {
-            return true;
-        }
-
-        return !empty($text)
-            && str_contains($text, $this->substr)
-            && strlen($text) >= $this->minLength;
+        return $this->checkRequirement($text)
+            && $this->checkContains($text)
+            && $this->checkLength($text);
     }
 
     public function contains(string $word): self
@@ -28,5 +24,28 @@ class StringValidator extends ParentValidator
     {
         $this->minLength = $length;
         return $this;
+    }
+
+    public function checkRequirement(?string $text): bool
+    {
+        if (!$this->requirement) {
+            return true;
+        }
+
+        return !empty($text);
+    }
+
+    public function checkContains(?string $text): bool
+    {
+        return str_contains($text, $this->substr) || is_null($text);
+    }
+
+    public function checkLength(?string $text): bool
+    {
+        if ($this->minLength === 0) {
+            return true;
+        }
+
+        return strlen($text) >= $this->minLength;
     }
 }
