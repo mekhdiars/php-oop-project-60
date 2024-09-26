@@ -22,10 +22,11 @@ class NumberValidator extends ParentValidator
         return $this;
     }
 
-    public function range($min, $max): void
+    public function range($min, $max): self
     {
         $this->min = $min;
         $this->max = $max;
+        return $this;
     }
 
     public function checkRequirement(?int $num): bool

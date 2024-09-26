@@ -7,7 +7,7 @@ use Hexlet\Validator\Validator;
 
 class StringValidatorTest extends TestCase
 {
-    private $v;
+    private Validator $v;
 
     public function setUp(): void
     {
@@ -41,7 +41,7 @@ class StringValidatorTest extends TestCase
         $this->assertFalse($result2);
     }
 
-    public function testLength()
+    public function testLength(): void
     {
         $schema = $this->v->string();
         $schema->required();

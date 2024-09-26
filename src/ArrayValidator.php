@@ -4,7 +4,7 @@ namespace Hexlet\Validator;
 
 class ArrayValidator extends ParentValidator
 {
-    private $size; // int|null
+    private int|null $size = null;
     private array $shape = [];
 
     public function isValid(?array $arr): bool
@@ -37,11 +37,11 @@ class ArrayValidator extends ParentValidator
 
     public function checkSizeof(?array $arr): bool
     {
-        if ($this->size) {
-            return count($arr) === $this->size;
+        if (is_null($this->size)) {
+            return true;
         }
 
-        return true;
+        return count($arr) === $this->size;
     }
 
     public function checkShape(?array $arr): bool
