@@ -4,17 +4,14 @@ namespace Hexlet\Validator;
 
 class ArrayValidator extends ParentValidator
 {
-    private $size;
+    private $size; // int|null
     private array $shape = [];
 
     public function isValid(?array $arr): bool
     {
-        if (!$this->requirement) {
-            return true;
-        }
-
-        return is_array($arr)
-            && $this->checkSizeof($arr);
+        return $this->checkRequirement($arr)
+            && $this->checkSizeof($arr)
+            && $this->checkShape($arr);
     }
 
     public function sizeof($num): bool
@@ -27,6 +24,15 @@ class ArrayValidator extends ParentValidator
     {
         $this->shape = $arr;
         $this->requirement = true;
+    }
+
+    public function checkRequirement(?array $arr): bool
+    {
+        if (!$this->requirement) {
+            return true;
+        }
+
+        return is_array($arr);
     }
 
     public function checkSizeof(?array $arr): bool

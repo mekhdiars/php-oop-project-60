@@ -10,11 +10,7 @@ class NumberValidator extends ParentValidator
 
     public function isValid(?int $num): bool
     {
-        if (!$this->requirement) {
-            return true;
-        }
-
-        return is_integer($num)
+        return $this->checkRequirement($num)
             && $this->checkPositive($num)
             && (int) $num >= $this->min
             && (int) $num <= $this->max;
@@ -32,12 +28,22 @@ class NumberValidator extends ParentValidator
         $this->max = $max;
     }
 
-    public function checkPositive(?int $num): bool
+    public function checkRequirement(?int $num): bool
     {
-        if ($this->shouldBePositive) {
-            return $num > 0 || is_null($num);
+        if (!$this->requirement) {
+            return true;
         }
 
-        return true;
+        return is_integer($num);
     }
+
+    public function checkPositive(?int $num): bool
+    {
+        if (!$this->shouldBePositive) {
+            return true;
+        }
+
+        return $num > 0 || is_null($num);
+    }
+
 }
