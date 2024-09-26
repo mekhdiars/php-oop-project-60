@@ -4,18 +4,27 @@ namespace Hexlet\Validator;
 
 class Validator
 {
-    public function string()
+    private array $validators = [
+        'string' => StringValidator::class,
+        'number' => NumberValidator::class,
+        'array' => ArrayValidator::class
+    ];
+
+    public function string(): StringValidator
     {
-        return new StringValidator();
+        $className = $this->validators['string'];
+        return new $className();
     }
 
     public function number()
     {
-        return new NumberValidator();
+        $className = $this->validators['number'];
+        return new $className();
     }
 
     public function array()
     {
-        return new ArrayValidator();
+        $className = $this->validators['array'];
+        return new $className();
     }
 }
