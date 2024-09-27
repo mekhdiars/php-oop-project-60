@@ -30,7 +30,6 @@
         }
     },
     "require": {
-        "illuminate/collections": "^11.25",
         "symfony/string": "^7.1"
     }
 }
