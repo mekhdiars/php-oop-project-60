@@ -2,6 +2,10 @@
 
 namespace Hexlet\Validator;
 
+use Hexlet\Validator\StringValidator;
+use Hexlet\Validator\NumberValidator;
+use Hexlet\Validator\ArrayValidator;
+
 class Validator
 {
     private array $validators = [
