@@ -27,4 +27,10 @@ class Validator
         $className = $this->validators['array'];
         return new $className();
     }
+
+    public function addValidator(string $type, string $name, callable $fn): void
+    {
+        $className = $this->validators[$type];
+        $className::addRule($name, $fn);
+    }
 }
