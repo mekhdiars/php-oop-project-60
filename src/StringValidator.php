@@ -2,10 +2,12 @@
 
 namespace Hexlet\Validator;
 
+use function Symfony\Component\String\u;
+
 class StringValidator extends ParentValidator
 {
     private string $substr = '';
-    private int $minLength = 0;
+    private int|null $minLength = null;
     private static array $rules = [];
     private string $activeRule = '';
     private string $char = '';
@@ -48,21 +50,25 @@ class StringValidator extends ParentValidator
             return true;
         }
 
-        return !empty($text);
+        return $text !== '' && $text !== null;
     }
 
     public function checkContains(?string $text): bool
     {
-        return str_contains($text, $this->substr) || is_null($text);
+        if ($this->substr === '') {
+            return true;
+        }
+
+        return u($text)->containsAny($this->substr);
     }
 
     public function lengthCheck(?string $text): bool
     {
-        if ($this->minLength === 0) {
+        if ($this->minLength === null) {
             return true;
         }
 
-        return strlen($text) >= $this->minLength;
+        return u($text)->length() >= $this->minLength;
     }
 
     public function ruleCheck(?string $text): bool

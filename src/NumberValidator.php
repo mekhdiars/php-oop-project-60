@@ -5,8 +5,8 @@ namespace Hexlet\Validator;
 class NumberValidator extends ParentValidator
 {
     private bool $shouldBePositive = false;
-    private $min = -INF;
-    private $max = INF;
+    private float|int $min = -INF;
+    private float|int $max = INF;
     private static array $rules = [];
     private string $activeRule = '';
     private int $num;
@@ -26,7 +26,7 @@ class NumberValidator extends ParentValidator
         return $this;
     }
 
-    public function range($min, $max): self
+    public function range(int $min, int $max): self
     {
         $this->min = $min;
         $this->max = $max;
@@ -38,7 +38,7 @@ class NumberValidator extends ParentValidator
         self::$rules[$name] = $fn;
     }
 
-    public function test($functionName, $num): self
+    public function test(string $functionName, int $num): self
     {
         $this->activeRule = $functionName;
         $this->num = $num;
@@ -63,7 +63,7 @@ class NumberValidator extends ParentValidator
         return $num > 0 || is_null($num);
     }
 
-    public function ruleCheck($num): bool
+    public function ruleCheck(?int $num): bool
     {
         $fn = self::$rules[$this->activeRule] ?? null;
 

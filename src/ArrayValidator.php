@@ -14,13 +14,13 @@ class ArrayValidator extends ParentValidator
             && $this->checkShape($arr);
     }
 
-    public function sizeof($num): bool
+    public function sizeof(int $num): bool
     {
         $this->size = $num;
         return true;
     }
 
-    public function shape($arr): void
+    public function shape(?array $arr): void
     {
         $this->shape = $arr;
         $this->requirement = true;
@@ -41,17 +41,17 @@ class ArrayValidator extends ParentValidator
             return true;
         }
 
-        return count($arr) === $this->size;
+        return collect($arr)->count() === $this->size;
     }
 
     public function checkShape(?array $arr): bool
     {
-        if (empty($this->shape)) {
+        if ($this->shape === []) {
             return true;
         }
 
-        $name = $arr['name'];
-        $age = $arr['age'];
+        $name = $arr['name'] ?? null;
+        $age = $arr['age'] ?? null;
         $nameSchema = $this->shape['name'];
         $ageSchema = $this->shape['age'];
 

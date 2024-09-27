@@ -16,13 +16,13 @@ class Validator
         return new $className();
     }
 
-    public function number()
+    public function number(): NumberValidator
     {
         $className = $this->validators['number'];
         return new $className();
     }
 
-    public function array()
+    public function array(): ArrayValidator
     {
         $className = $this->validators['array'];
         return new $className();
