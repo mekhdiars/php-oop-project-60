@@ -12,19 +12,16 @@ class Validator
 
     public function string(): StringValidator
     {
-        $className = $this->validators['string'];
         return new StringValidator();
     }
 
     public function number(): NumberValidator
     {
-        $className = $this->validators['number'];
         return new NumberValidator();
     }
 
     public function array(): ArrayValidator
     {
-        $className = $this->validators['array'];
         return new ArrayValidator();
     }
 
