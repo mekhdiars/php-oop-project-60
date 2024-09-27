@@ -20,7 +20,7 @@ class ArrayValidator extends ParentValidator
         return true;
     }
 
-    public function shape(?array $arr): void
+    public function shape(array $arr): void
     {
         $this->shape = $arr;
         $this->requirement = true;
