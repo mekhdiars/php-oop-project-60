@@ -7,11 +7,15 @@ class NumberValidator extends ParentValidator
     private bool $shouldBePositive = false;
     private $min = -INF;
     private $max = INF;
+    private static array $rules = [];
+    private string $activeRule = '';
+    private int $num;
 
     public function isValid(?int $num): bool
     {
         return $this->checkRequirement($num)
             && $this->checkPositive($num)
+            && $this->ruleCheck($num)
             && (int) $num >= $this->min
             && (int) $num <= $this->max;
     }
@@ -26,6 +30,18 @@ class NumberValidator extends ParentValidator
     {
         $this->min = $min;
         $this->max = $max;
+        return $this;
+    }
+
+    public static function addRule(string $name, callable $fn): void
+    {
+        self::$rules[$name] = $fn;
+    }
+
+    public function test($functionName, $num): self
+    {
+        $this->activeRule = $functionName;
+        $this->num = $num;
         return $this;
     }
 
@@ -45,5 +61,16 @@ class NumberValidator extends ParentValidator
         }
 
         return $num > 0 || is_null($num);
+    }
+
+    public function ruleCheck($num): bool
+    {
+        $fn = self::$rules[$this->activeRule] ?? null;
+
+        if (is_null($fn)) {
+            return true;
+        }
+
+        return $fn($num, $this->num);
     }
 }

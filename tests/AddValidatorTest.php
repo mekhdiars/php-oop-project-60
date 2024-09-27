@@ -18,4 +18,16 @@ class AddValidatorTest extends TestCase
         $this->assertFalse($result1);
         $this->assertTrue($result2);
     }
+
+    public function testNumber(): void
+    {
+        $v = new Validator();
+        $fn = fn($value, $min) => $value >= $min;
+        $v->addValidator('number', 'min', $fn);
+        $schema = $v->number()->test('min', 5);
+        $result1 = $schema->isValid(4);
+        $result2 = $schema->isValid(6);
+        $this->assertFalse($result1);
+        $this->assertTrue($result2);
+    }
 }
