@@ -26,7 +26,7 @@ composer install
 ## Использование
 
 Пример использования:
-```
+```php
 <?php
 
 use Hexlet\Validator\Validator;
