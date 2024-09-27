@@ -46,5 +46,4 @@ class NumberValidator extends ParentValidator
 
         return $num > 0 || is_null($num);
     }
-
 }

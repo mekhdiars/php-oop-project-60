@@ -7,11 +7,11 @@ use Hexlet\Validator\Validator;
 
 class NumberValidatorTest extends TestCase
 {
-    public $v;
+    public Validator $v;
 
     public function setUp(): void
     {
-        $this->v = new Validator;
+        $this->v = new Validator();
     }
 
     public function testNumber(): void
