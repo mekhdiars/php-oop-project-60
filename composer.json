@@ -17,10 +17,6 @@
             "email": "mehdiarsahanov@gmail.com"
         }
     ],
-    "require": {
-        "illuminate/collections": "^11.13",
-        "symfony/string": "^7.1"
-    },
     "require-dev": {
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-phpunit": "^0.12.18",
