@@ -2,10 +2,6 @@
 
 namespace Hexlet\Validator;
 
-use Hexlet\Validator\StringValidator;
-use Hexlet\Validator\NumberValidator;
-use Hexlet\Validator\ArrayValidator;
-
 class Validator
 {
     private array $validators = [
@@ -17,19 +13,19 @@ class Validator
     public function string(): StringValidator
     {
         $className = $this->validators['string'];
-        return new $className();
+        return new StringValidator();
     }
 
     public function number(): NumberValidator
     {
         $className = $this->validators['number'];
-        return new $className();
+        return new NumberValidator();
     }
 
     public function array(): ArrayValidator
     {
         $className = $this->validators['array'];
-        return new $className();
+        return new ArrayValidator();
     }
 
     public function addValidator(string $type, string $name, callable $fn): void
