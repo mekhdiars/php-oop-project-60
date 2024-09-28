@@ -20,8 +20,6 @@
 - contains – строка содержит определённую подстроку
 
 ```php
-<?php
-
 $v = new \Hexlet\Validator\Validator();
 
 $schema = $v->string();
@@ -60,8 +58,6 @@ $v->string()->minLength(10)->minLength(5)->isValid('Hexlet'); // true
 - range – диапазон в который должны попадать числа включая границы
 
 ```php
-<?php
-
 $v = new \Hexlet\Validator\Validator();
 
 $schema = $v->number();
@@ -81,4 +77,69 @@ $schema->range(-5, 5);
 
 $schema->isValid(-3); // false
 $schema->isValid(5); // true
+```
+
+### Массивы
+
+- required – требуется тип данных array
+- sizeof – длина массива равна указанной
+
+```php
+$v = new \Hexlet\Validator\Validator();
+
+$schema = $v->array();
+
+$schema->isValid(null); // true
+
+$schema = $schema->required();
+
+$schema->isValid([]); // true
+$schema->isValid(['hexlet']); // true
+
+$schema->sizeof(2); // true
+
+$schema->isValid(['hexlet']); // false
+$schema->isValid(['hexlet', 'code-basics']); // true
+```
+
+### Вложенная валидация
+
+```php
+$v = new \Hexlet\Validator\Validator();
+
+$schema = $v->array();
+
+// Позволяет описывать валидацию для ключей массива
+$schema->shape([
+    'name' => $v->string()->required(),
+    'age' => $v->number()->positive(),
+]);
+
+$schema->isValid(['name' => 'kolya', 'age' => 100]); // true
+$schema->isValid(['name' => 'maya', 'age' => null]); // true
+$schema->isValid(['name' => '', 'age' => null]); // false
+$schema->isValid(['name' => 'ada', 'age' => -5]); // false
+```
+
+### Добавление собственных валидаторов
+
+```php
+$v = new \Hexlet\Validator\Validator();
+
+$fn = fn($value, $start) => str_starts_with($value, $start);
+// Метод добавления новых валидаторов
+// addValidator($type, $name, $fn)
+$v->addValidator('string', 'startWith', $fn);
+
+// Новые валидаторы вызываются через метод test
+$schema = $v->string()->test('startWith', 'H');
+$schema->isValid('exlet'); // false
+$schema->isValid('Hexlet'); // true
+
+$fn = fn($value, $min) => $value >= $min;
+$v->addValidator('number', 'min', $fn);
+
+$schema = $v->number()->test('min', 5);
+$schema->isValid(4); // false
+$schema->isValid(6); // true
 ```
