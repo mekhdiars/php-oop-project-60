@@ -6,7 +6,7 @@ use function Symfony\Component\String\u;
 
 class StringSchema extends ParentSchema
 {
-    public function required(): static
+    public function required(): self
     {
         $this->rules['required'] = fn($text) => $text !== '' && $text !== null;
         return $this;
