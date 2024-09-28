@@ -30,13 +30,13 @@ use Hexlet\Validator\Validator;
 $v = new \Hexlet\Validator\Validator();
 
 // строки
-$schema = $v->required()->string();
+$schema = $v->string()->required();
 
 $schema->isValid('what does the fox say'); // true
 $schema->isValid(''); // false
 
 // числа
-$schema = $v->required()->number()->positive();
+$schema = $v->number()->required()->positive();
 
 $schema->isValid(-10); // false
 $schema->isValid(10); // true
