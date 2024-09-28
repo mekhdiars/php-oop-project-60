@@ -4,58 +4,33 @@ namespace Hexlet\Validator\Schemas;
 
 class ArraySchema extends ParentSchema
 {
-    private int|null $size = null;
-    private array $shape = [];
-
-    public function isValid(?array $arr): bool
+    public function required(): self
     {
-        return $this->isValueValid($arr)
-            && $this->hasRequiredSize($arr)
-            && $this->hasAccordingShape($arr);
+        $this->rules['required'] = fn($arr) => is_array($arr);
+        return $this;
     }
 
-    public function sizeof(int $num): bool
+    public function sizeof(int $size): self
     {
-        $this->size = $num;
-        return true;
+        $this->rules['sizeof'] = fn($arr) => count($arr) === $size;
+        return $this;
     }
 
-    public function shape(array $arr): void
+    public function shape(array $shape): self
     {
-        $this->shape = $arr;
-        $this->requirement = true;
-    }
+        $func = function ($arr) use ($shape) {
+            foreach ($shape as $key => $schema) {
+                $value = $arr[$key] ?? null;
 
-    public function isValueValid(?array $arr): bool
-    {
-        if (!$this->requirement) {
+                if (!$schema->isValid($value)) {
+                    return false;
+                }
+            }
+
             return true;
-        }
+        };
 
-        return is_array($arr);
-    }
-
-    public function hasRequiredSize(?array $arr): bool
-    {
-        if (is_null($this->size)) {
-            return true;
-        }
-
-        return collect($arr)->count() === $this->size;
-    }
-
-    public function hasAccordingShape(?array $arr): bool
-    {
-        if ($this->shape === []) {
-            return true;
-        }
-
-        $name = $arr['name'] ?? null;
-        $age = $arr['age'] ?? null;
-        $nameSchema = $this->shape['name'];
-        $ageSchema = $this->shape['age'];
-
-        return $nameSchema->isValid($name)
-            && $ageSchema->isValid($age);
+        $this->rules['shape'] = $func;
+        return $this;
     }
 }
