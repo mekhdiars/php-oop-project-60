@@ -1,5 +1,5 @@
 test:
-	composer exec --verbose phpunit -- --colors=always tests/StringValidatorTest.php
+	composer exec --verbose phpunit -- --colors=always tests
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 src tests
 	composer exec --verbose phpstan -- --level=5 analyse src tests

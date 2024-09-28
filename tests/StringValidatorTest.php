@@ -44,7 +44,6 @@ class StringValidatorTest extends TestCase
     public function testLength(): void
     {
         $schema = $this->v->string();
-dump($schema->minLength(5));
         $schema->required();
         $result1 = $schema->minLength(10)->minLength(5)->isValid('Hexlet');
         $result2 = $schema->minLength(10)->minLength(5)->isValid('one');

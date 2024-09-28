@@ -8,11 +8,6 @@ use Hexlet\Validator\Schemas\StringSchema;
 
 class Validator
 {
-//    private array $schemas = [
-//        'string' => StringSchema::class,
-//        'number' => NumberSchema::class,
-//        'array' => ArraySchema::class
-//    ];
     private array $customValidators = [];
 
     public function string(): StringSchema
@@ -25,12 +20,18 @@ class Validator
 
     public function number(): NumberSchema
     {
-        return new NumberSchema();
+        $schema = new NumberSchema();
+        $schema->addRules($this->customValidators['number'] ?? []);
+
+        return $schema;
     }
 
     public function array(): ArraySchema
     {
-        return new ArraySchema();
+        $schema = new ArraySchema();
+        $schema->addRules($this->customValidators['array'] ?? []);
+
+        return $schema;
     }
 
     public function addValidator(string $type, string $name, callable $fn): void
