@@ -14,7 +14,7 @@ class StringSchema extends ParentSchema
 
     public function isValid(?string $text): bool
     {
-        return $this->isTextValid($text)
+        return $this->isValueValid($text)
             && $this->hasRequiredSubstr($text)
             && $this->hasRequiredLength($text)
             && $this->isAccordingRule($text);
@@ -44,7 +44,7 @@ class StringSchema extends ParentSchema
         return $this;
     }
 
-    public function isTextValid(?string $text): bool
+    public function isValueValid(?string $text): bool
     {
         if (!$this->requirement) {
             return true;

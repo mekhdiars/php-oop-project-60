@@ -9,7 +9,7 @@ class ArraySchema extends ParentSchema
 
     public function isValid(?array $arr): bool
     {
-        return $this->isArrayValid($arr)
+        return $this->isValueValid($arr)
             && $this->hasRequiredSize($arr)
             && $this->hasAccordingShape($arr);
     }
@@ -26,7 +26,7 @@ class ArraySchema extends ParentSchema
         $this->requirement = true;
     }
 
-    public function isArrayValid(?array $arr): bool
+    public function isValueValid(?array $arr): bool
     {
         if (!$this->requirement) {
             return true;

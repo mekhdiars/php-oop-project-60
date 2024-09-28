@@ -13,7 +13,7 @@ class NumberSchema extends ParentSchema
 
     public function isValid(?int $num): bool
     {
-        return $this->isNumberValid($num)
+        return $this->isValueValid($num)
             && $this->isPositive($num)
             && $this->isAccordingRule($num)
             && (int) $num >= $this->min
@@ -45,7 +45,7 @@ class NumberSchema extends ParentSchema
         return $this;
     }
 
-    public function isNumberValid(?int $num): bool
+    public function isValueValid(?int $num): bool
     {
         if (!$this->requirement) {
             return true;
