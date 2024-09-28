@@ -1,8 +1,8 @@
 <?php
 
-namespace Hexlet\Validator;
+namespace Hexlet\Validator\Schemas;
 
-abstract class ParentValidator
+abstract class ParentSchema
 {
     protected bool $requirement = false;
 

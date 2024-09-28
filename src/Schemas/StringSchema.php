@@ -1,10 +1,10 @@
 <?php
 
-namespace Hexlet\Validator;
+namespace Hexlet\Validator\Schemas;
 
 use function Symfony\Component\String\u;
 
-class StringValidator extends ParentValidator
+class StringSchema extends ParentSchema
 {
     private string $substr = '';
     private int|null $minLength = null;

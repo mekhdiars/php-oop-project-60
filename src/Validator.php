@@ -2,27 +2,31 @@
 
 namespace Hexlet\Validator;
 
+use Hexlet\Validator\Schemas\ArraySchema;
+use Hexlet\Validator\Schemas\NumberSchema;
+use Hexlet\Validator\Schemas\StringSchema;
+
 class Validator
 {
     private array $validators = [
-        'string' => StringValidator::class,
-        'number' => NumberValidator::class,
-        'array' => ArrayValidator::class
+        'string' => StringSchema::class,
+        'number' => NumberSchema::class,
+        'array' => ArraySchema::class
     ];
 
-    public function string(): StringValidator
+    public function string(): StringSchema
     {
-        return new StringValidator();
+        return new StringSchema();
     }
 
-    public function number(): NumberValidator
+    public function number(): NumberSchema
     {
-        return new NumberValidator();
+        return new NumberSchema();
     }
 
-    public function array(): ArrayValidator
+    public function array(): ArraySchema
     {
-        return new ArrayValidator();
+        return new ArraySchema();
     }
 
     public function addValidator(string $type, string $name, callable $fn): void

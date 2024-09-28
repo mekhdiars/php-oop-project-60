@@ -1,8 +1,8 @@
 <?php
 
-namespace Hexlet\Validator;
+namespace Hexlet\Validator\Schemas;
 
-class ArrayValidator extends ParentValidator
+class ArraySchema extends ParentSchema
 {
     private int|null $size = null;
     private array $shape = [];

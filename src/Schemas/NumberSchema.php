@@ -1,8 +1,8 @@
 <?php
 
-namespace Hexlet\Validator;
+namespace Hexlet\Validator\Schemas;
 
-class NumberValidator extends ParentValidator
+class NumberSchema extends ParentSchema
 {
     private bool $shouldBePositive = false;
     private float|int $min = -INF;
