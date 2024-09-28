@@ -9,9 +9,9 @@ class ArraySchema extends ParentSchema
 
     public function isValid(?array $arr): bool
     {
-        return $this->checkRequirement($arr)
-            && $this->checkSizeof($arr)
-            && $this->checkShape($arr);
+        return $this->isArrayValid($arr)
+            && $this->hasRequiredSize($arr)
+            && $this->hasAccordingShape($arr);
     }
 
     public function sizeof(int $num): bool
@@ -26,7 +26,7 @@ class ArraySchema extends ParentSchema
         $this->requirement = true;
     }
 
-    public function checkRequirement(?array $arr): bool
+    public function isArrayValid(?array $arr): bool
     {
         if (!$this->requirement) {
             return true;
@@ -35,7 +35,7 @@ class ArraySchema extends ParentSchema
         return is_array($arr);
     }
 
-    public function checkSizeof(?array $arr): bool
+    public function hasRequiredSize(?array $arr): bool
     {
         if (is_null($this->size)) {
             return true;
@@ -44,7 +44,7 @@ class ArraySchema extends ParentSchema
         return collect($arr)->count() === $this->size;
     }
 
-    public function checkShape(?array $arr): bool
+    public function hasAccordingShape(?array $arr): bool
     {
         if ($this->shape === []) {
             return true;

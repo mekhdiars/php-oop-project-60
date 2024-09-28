@@ -14,10 +14,10 @@ class StringSchema extends ParentSchema
 
     public function isValid(?string $text): bool
     {
-        return $this->checkRequirement($text)
-            && $this->checkContains($text)
-            && $this->lengthCheck($text)
-            && $this->ruleCheck($text);
+        return $this->isTextValid($text)
+            && $this->hasRequiredSubstr($text)
+            && $this->hasRequiredLength($text)
+            && $this->isAccordingRule($text);
     }
 
     public function contains(string $word): self
@@ -44,7 +44,7 @@ class StringSchema extends ParentSchema
         return $this;
     }
 
-    public function checkRequirement(?string $text): bool
+    public function isTextValid(?string $text): bool
     {
         if (!$this->requirement) {
             return true;
@@ -53,7 +53,7 @@ class StringSchema extends ParentSchema
         return $text !== '' && $text !== null;
     }
 
-    public function checkContains(?string $text): bool
+    public function hasRequiredSubstr(?string $text): bool
     {
         if ($this->substr === '') {
             return true;
@@ -62,7 +62,7 @@ class StringSchema extends ParentSchema
         return u($text)->containsAny($this->substr);
     }
 
-    public function lengthCheck(?string $text): bool
+    public function hasRequiredLength(?string $text): bool
     {
         if ($this->minLength === null) {
             return true;
@@ -71,7 +71,7 @@ class StringSchema extends ParentSchema
         return u($text)->length() >= $this->minLength;
     }
 
-    public function ruleCheck(?string $text): bool
+    public function isAccordingRule(?string $text): bool
     {
         $fn = self::$rules[$this->activeRule] ?? null;
 

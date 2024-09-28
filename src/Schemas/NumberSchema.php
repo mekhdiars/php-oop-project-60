@@ -13,9 +13,9 @@ class NumberSchema extends ParentSchema
 
     public function isValid(?int $num): bool
     {
-        return $this->checkRequirement($num)
-            && $this->checkPositive($num)
-            && $this->ruleCheck($num)
+        return $this->isNumberValid($num)
+            && $this->isPositive($num)
+            && $this->isAccordingRule($num)
             && (int) $num >= $this->min
             && (int) $num <= $this->max;
     }
@@ -45,7 +45,7 @@ class NumberSchema extends ParentSchema
         return $this;
     }
 
-    public function checkRequirement(?int $num): bool
+    public function isNumberValid(?int $num): bool
     {
         if (!$this->requirement) {
             return true;
@@ -54,7 +54,7 @@ class NumberSchema extends ParentSchema
         return is_integer($num);
     }
 
-    public function checkPositive(?int $num): bool
+    public function isPositive(?int $num): bool
     {
         if (!$this->shouldBePositive) {
             return true;
@@ -63,7 +63,7 @@ class NumberSchema extends ParentSchema
         return $num > 0 || is_null($num);
     }
 
-    public function ruleCheck(?int $num): bool
+    public function isAccordingRule(?int $num): bool
     {
         $fn = self::$rules[$this->activeRule] ?? null;
 
