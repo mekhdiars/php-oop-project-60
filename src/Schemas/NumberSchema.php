@@ -8,7 +8,7 @@ class NumberSchema extends ParentSchema
     private float|int $min = -INF;
     private float|int $max = INF;
     private static array $rules = [];
-    private string $activeRule = '';
+    private string $nameOfActiveRule = '';
     private int $num;
 
     public function isValid(?int $num): bool
@@ -40,7 +40,7 @@ class NumberSchema extends ParentSchema
 
     public function test(string $functionName, int $num): self
     {
-        $this->activeRule = $functionName;
+        $this->nameOfActiveRule = $functionName;
         $this->num = $num;
         return $this;
     }
@@ -65,7 +65,7 @@ class NumberSchema extends ParentSchema
 
     public function isAccordingRule(?int $num): bool
     {
-        $fn = self::$rules[$this->activeRule] ?? null;
+        $fn = self::$rules[$this->nameOfActiveRule] ?? null;
 
         if (is_null($fn)) {
             return true;

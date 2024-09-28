@@ -8,15 +8,19 @@ use Hexlet\Validator\Schemas\StringSchema;
 
 class Validator
 {
-    private array $validators = [
-        'string' => StringSchema::class,
-        'number' => NumberSchema::class,
-        'array' => ArraySchema::class
-    ];
+//    private array $schemas = [
+//        'string' => StringSchema::class,
+//        'number' => NumberSchema::class,
+//        'array' => ArraySchema::class
+//    ];
+    private array $customValidators = [];
 
     public function string(): StringSchema
     {
-        return new StringSchema();
+        $schema = new StringSchema();
+        $schema->addRules($this->customValidators['string'] ?? []);
+
+        return $schema;
     }
 
     public function number(): NumberSchema
@@ -31,7 +35,6 @@ class Validator
 
     public function addValidator(string $type, string $name, callable $fn): void
     {
-        $className = $this->validators[$type];
-        $className::addRule($name, $fn);
+        $this->customValidators[$type][$name] = $fn;
     }
 }

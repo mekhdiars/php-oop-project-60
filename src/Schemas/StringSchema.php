@@ -6,79 +6,21 @@ use function Symfony\Component\String\u;
 
 class StringSchema extends ParentSchema
 {
-    private string $substr = '';
-    private int|null $minLength = null;
-    private static array $rules = [];
-    private string $activeRule = '';
-    private string $char = '';
-
-    public function isValid(?string $text): bool
+    public function required(): static
     {
-        return $this->isValueValid($text)
-            && $this->hasRequiredSubstr($text)
-            && $this->hasRequiredLength($text)
-            && $this->isAccordingRule($text);
+        $this->rules['required'] = fn($text) => $text !== '' && $text !== null;
+        return $this;
     }
 
-    public function contains(string $word): self
+    public function contains(string $substr): self
     {
-        $this->substr = $word;
+        $this->rules['contains'] = fn($text) => u($text)->containsAny($substr);
         return $this;
     }
 
     public function minLength(int $length): self
     {
-        $this->minLength = $length;
+        $this->rules['minLength'] = fn($text) => u($text)->length() >= $length;
         return $this;
-    }
-
-    public static function addRule(string $name, callable $fn): void
-    {
-        self::$rules[$name] = $fn;
-    }
-
-    public function test(string $name, string $char): self
-    {
-        $this->activeRule = $name;
-        $this->char = $char;
-        return $this;
-    }
-
-    public function isValueValid(?string $text): bool
-    {
-        if (!$this->requirement) {
-            return true;
-        }
-
-        return $text !== '' && $text !== null;
-    }
-
-    public function hasRequiredSubstr(?string $text): bool
-    {
-        if ($this->substr === '') {
-            return true;
-        }
-
-        return u($text)->containsAny($this->substr);
-    }
-
-    public function hasRequiredLength(?string $text): bool
-    {
-        if ($this->minLength === null) {
-            return true;
-        }
-
-        return u($text)->length() >= $this->minLength;
-    }
-
-    public function isAccordingRule(?string $text): bool
-    {
-        $fn = self::$rules[$this->activeRule] ?? null;
-
-        if (is_null($fn)) {
-            return true;
-        }
-
-        return $fn($text, $this->char);
     }
 }
