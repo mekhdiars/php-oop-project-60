@@ -17,11 +17,10 @@ abstract class ParentSchema
             }
         }
 
-        if ($this->nameOfActiveRule === '') {
+        $fn = $this->customRules[$this->nameOfActiveRule] ?? null;
+        if ($fn === null) {
             return true;
         }
-
-        $fn = $this->customRules[$this->nameOfActiveRule];
         if (!$fn($data, $this->valueForActiveRule)) {
             return false;
         }
